@@ -10,6 +10,8 @@ namespace SchoolProject.Models
         public int TeacherId;
         public string TeacherFname;
         public string TeacherLname;
+        public string TeacherNumber;
+        public string TeacherSalary;
 
     }
 }

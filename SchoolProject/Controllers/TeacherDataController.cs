@@ -58,11 +58,16 @@ namespace SchoolProject.Controllers
                 int TeacherId = (int)ResultSet["teacherid"];
                 string TeacherFname = (string)ResultSet["teacherfname"];
                 string Teachelname = (string)ResultSet["teacherlname"];
+                string TeacherNumber = (string)ResultSet["employeenumber"];
+                decimal TeacherSalary = (decimal)ResultSet["salary"];
+
 
                 Teacher newTeacher = new Teacher();
                 newTeacher.TeacherId = TeacherId;
                 newTeacher.TeacherFname=TeacherFname;
                 newTeacher.TeacherLname = Teachelname;
+                newTeacher.TeacherNumber = TeacherNumber;
+                newTeacher.TeacherSalary = TeacherSalary.ToString();
 
                 //Add the Teacher Name to the List
                 //Teachers.Add(NewTeacher);
@@ -99,12 +104,16 @@ namespace SchoolProject.Controllers
                 int TeacherId = (int)ResultSet["teacherid"];
                 string TeacherFname = (string)ResultSet["teacherfname"];
                 string Teachelname = (string)ResultSet["teacherlname"];
+                string TeacherNumber = (string)ResultSet["employeenumber"];
+                decimal TeacherSalary = (decimal)ResultSet["salary"];
 
 
-                
+
                 newTeacher.TeacherId = TeacherId;
                 newTeacher.TeacherFname = TeacherFname;
                 newTeacher.TeacherLname = Teachelname;
+                newTeacher.TeacherNumber = TeacherNumber;
+                newTeacher.TeacherSalary = TeacherSalary.ToString();
             }
 
                 return newTeacher;
