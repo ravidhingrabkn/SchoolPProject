@@ -2,9 +2,15 @@
 @{
     ViewBag.Title = "Show";
 }
-
 <div>
-    <a class="navlink" href="/Teacher/List">Back To Teachers</a>
+    <span >
+        <a  class="navlink" href="/Teacher/List">Back To Teachers</a>
+    </span>
+
+    <span >
+        <a style="float:right;" href="/Teacher/DeleteConfirm/@Model.TeacherId">Delete</a>
+    </span>
+
 </div>
 <div id="containershow">
     <div>
@@ -19,10 +25,10 @@
         <label>Employee Number:</label>
         <span>@Model.TeacherNumber</span>
     </div>
-    <div>
+    <!--<div>
         <label>Employee Salary:</label>
         <span>@Model.TeacherSalary</span>
     </div>
-
+        -->
 
 </div>

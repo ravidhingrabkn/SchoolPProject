@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using SchoolProject.Models;
 using MySql.Data.MySqlClient;
+using System.Diagnostics;
 
 namespace SchoolProject.Controllers
 {
@@ -18,14 +19,17 @@ namespace SchoolProject.Controllers
         /// <summary>
         /// Returns a list of Teachers in the system
         /// </summary>
+        /// <param name="SearchKey"> Search key (optional) of tearcher
+        /// name</param>
         /// <example>GET api/TeacherData/ListTeachers</example>
         /// <returns>
         /// A list of teachers object (including 
         /// </returns>
         [HttpGet]
         [Route("api/TeacherData/ListTeachers/{SearchKey?}")]
-        public IEnumerable<Teacher> ListTeachers(string SearchKey=null)
+        public IEnumerable<Teacher> ListTeachers(string SearchKey = null)
         {
+          
             //Create an instance of a connection
             MySqlConnection Conn = School.AccessDatabase();
 
@@ -59,7 +63,7 @@ namespace SchoolProject.Controllers
                 string TeacherFname = (string)ResultSet["teacherfname"];
                 string Teachelname = (string)ResultSet["teacherlname"];
                 string TeacherNumber = (string)ResultSet["employeenumber"];
-                decimal TeacherSalary = (decimal)ResultSet["salary"];
+               // decimal TeacherSalary = (decimal)ResultSet["salary"];
 
 
                 Teacher newTeacher = new Teacher();
@@ -67,7 +71,7 @@ namespace SchoolProject.Controllers
                 newTeacher.TeacherFname=TeacherFname;
                 newTeacher.TeacherLname = Teachelname;
                 newTeacher.TeacherNumber = TeacherNumber;
-                newTeacher.TeacherSalary = TeacherSalary.ToString();
+                //newTeacher.TeacherSalary = TeacherSalary.ToString();
 
                 //Add the Teacher Name to the List
                 //Teachers.Add(NewTeacher);
@@ -105,7 +109,7 @@ namespace SchoolProject.Controllers
                 string TeacherFname = (string)ResultSet["teacherfname"];
                 string Teachelname = (string)ResultSet["teacherlname"];
                 string TeacherNumber = (string)ResultSet["employeenumber"];
-                decimal TeacherSalary = (decimal)ResultSet["salary"];
+                //decimal TeacherSalary = (decimal)ResultSet["salary"];
 
 
 
@@ -113,10 +117,63 @@ namespace SchoolProject.Controllers
                 newTeacher.TeacherFname = TeacherFname;
                 newTeacher.TeacherLname = Teachelname;
                 newTeacher.TeacherNumber = TeacherNumber;
-                newTeacher.TeacherSalary = TeacherSalary.ToString();
+                //newTeacher.TeacherSalary = TeacherSalary.ToString();
             }
 
                 return newTeacher;
+        }
+      /// <summary>
+      /// Add new teacher 
+      /// </summary>
+      /// <paramref name="NewTeacher"></paramref>
+        public void AddTeacher(Teacher NewTeacher)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "insert into teachers(teacherfname, teacherlname, employeenumber) values (@teacherfname,@teacherlname,@employeenumber)";
+            cmd.CommandText = query;
+           
+                cmd.Parameters.AddWithValue("@teacherfname", NewTeacher.TeacherFname);
+            
+            cmd.Parameters.AddWithValue("@teacherlname", NewTeacher.TeacherLname);
+            cmd.Parameters.AddWithValue("@employeenumber", NewTeacher.TeacherNumber);
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+        }
+        /// <summary>
+        /// this function will delete the teacher from the database
+        /// </summary>
+        /// <param name="TeacherId">the primary key teacherid</param>
+        
+        public void DeleteTeacher(int TeacherId)
+        {
+
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            string query = "delete from teachers where teacherid=@id";
+            cmd.Parameters.AddWithValue("@id",TeacherId);
+            cmd.CommandText= query;
+            cmd.Prepare();
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
         }
 
     }

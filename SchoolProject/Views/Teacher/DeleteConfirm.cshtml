@@ -1,0 +1,16 @@
+﻿@model SchoolProject.Models.Teacher
+@{
+    ViewBag.Title = "Show";
+}
+
+<h2>Are you sure?</h2>
+    <div>
+        <label>Teacher Name:</label>
+        <span class="name" style="font-size: 20px;">@Model.TeacherFname @Model.TeacherLname</span>
+    </div>
+
+<form method="POST" action="/Teacher/Delete/@Model.TeacherId">
+    <input type="submit" value="Delete" />
+   
+
+</form>

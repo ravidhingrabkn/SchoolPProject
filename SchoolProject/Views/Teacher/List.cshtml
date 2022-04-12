@@ -5,16 +5,18 @@
     ViewBag.Title = "List";
 }
 
+<div><a href="/Teacher/New">Add a New Teacher</a></div>
 <div id="containerlist">
     <h2>List of Teachers</h2>
+    <div>There are @Model.Count() teachers in the system</div>
     <form action="/Teacher/List" method="GET">
-        <input type="text" name="SearchKey"/>
-        <input type="submit" value="Search"/>
+        <input type="text" name="SearchKey" placeholder="Type a name here" />
+        <input type="submit" value="Search" />
     </form>
     @foreach (var teacher in Model)
     {
-<div class="listitem row">
-    <div class="col-lg-12"><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname</a></div>
-</div>
+        <div class="listitem row">
+            <div class="col-lg-12"><a href="/Teacher/Show/@teacher.TeacherId">@teacher.TeacherFname @teacher.TeacherLname</a></div>
+        </div>
     }
 </div>
