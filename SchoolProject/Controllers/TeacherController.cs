@@ -79,5 +79,51 @@ namespace SchoolProject.Controllers
 
         }
 
+        /// <summary>
+        /// this will bring the info of the teacher to the user from the webpage
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+
+        //GET : /Teacher/Edit/{id}
+
+        public ActionResult Edit(int id)
+        {
+            //here to pass TeacherInfo to the view to show that to the user
+
+            TeacherDataController controller = new TeacherDataController();
+            Teacher SelectedTeacher = controller.FindTeacher(id);
+
+            return View(SelectedTeacher);
+        }
+
+        //POST : /Teacher/Update/{id}
+
+        /// <summary>
+        /// it will update the teacher data in the database
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpPost]
+
+        public ActionResult Update(int id, string teacherfname, string teacherlname, string employeenumber)
+        {
+            Debug.WriteLine("The teacher name is "+teacherfname);
+            Debug.WriteLine("the ID is " + id);
+
+            Teacher TeacherInfo = new Teacher();
+            TeacherInfo.TeacherFname = teacherfname;
+            TeacherInfo.TeacherLname = teacherlname;
+            TeacherInfo.TeacherNumber = employeenumber;
+            TeacherInfo.TeacherId = id;
+
+            //update the teacher infomation
+            TeacherDataController controller = new TeacherDataController();
+            controller.UpdateTeacher(id, TeacherInfo);
+
+            //return to the teacher database that just updated
+            return RedirectToAction("Show/" + id);
+        }
+
     }
 }

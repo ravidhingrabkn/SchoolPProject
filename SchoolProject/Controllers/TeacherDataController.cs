@@ -176,5 +176,37 @@ namespace SchoolProject.Controllers
 
         }
 
+        /// <summary>
+        /// It will update the Teacher info if needed
+        /// </summary>
+        /// <param name="TeacherId">Teacher primary key so that we know that this is the teacher that need to be updated</param>
+        /// <param name="TeacherInfo">teacher firstName lastname or Number</param>
+
+        public void UpdateTeacher(int TeacherId, Teacher TeacherInfo)
+        {
+            MySqlConnection Conn = School.AccessDatabase();
+
+            //Open the connection between the web server and database
+            Conn.Open();
+
+            //Establish a new command (query) for our database
+            MySqlCommand cmd = Conn.CreateCommand();
+
+            //string query = "insert into teachers(teacherfname, teacherlname, employeenumber) values (@teacherfname,@teacherlname,@employeenumber)";
+            cmd.CommandText = "update teachers set teacherfname=@teacherfname,teacherlname =@teacherlname, employeenumber =@employeenumber WHERE teacherid =@teacherid";
+            cmd.Parameters.AddWithValue("@teacherfname", TeacherInfo.TeacherFname);
+
+            cmd.Parameters.AddWithValue("@teacherlname", TeacherInfo.TeacherLname);
+            cmd.Parameters.AddWithValue("@employeenumber", TeacherInfo.TeacherNumber);
+
+            cmd.Parameters.AddWithValue("@teacherid", TeacherId);
+            
+
+            cmd.ExecuteNonQuery();
+
+            Conn.Close();
+
+        }
+
     }
 }
